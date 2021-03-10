@@ -69,7 +69,26 @@ function modulated_stream = modulate_PAM (input_bitstream, modulation_levels)
 end
 
 function modulated_stream = modulate_PSK (input_bitstream, modulation_levels)
-	modulated_stream = "PSK modulated stream";
+	input_bitstream = double(input_bitstream);
+	modulation_levels = double(modulation_levels);
+	% input data size check
+	[bitstream_rows, bitstream_cols] = size(input_bitstream);
+	if (bitstream_rows ~= 1)
+		error("<input_bitstream> must be a 1 dimension vector");
+	end
+	if (mod(bitstream_cols, log2(modulation_levels)) ~= 0)
+		error("<input_bitstream> length must be multiple of <modulation_levels>");
+	end
+	% creating modulation vector
+	modulation = [];
+	for k = 0:1:modulation_levels-1
+		tita_k = 2*pi*k/modulation_levels;
+		modulation = [modulation, sqrt(1/2)*cos(tita_k) + i*sqrt(1/2)*sin(tita_k)];
+	end
+	% reshaping matrix to that it fits in the number of bits/symbol
+	input_matrix = reshape(input_bitstream, log2(modulation_levels), []);
+	% modulation_computation
+	modulated_stream = modulation(bi2de(input_matrix', 'left-msb')+1);
 end
 
 function modulated_stream = modulate_QAM (input_bitstream, modulation_levels)

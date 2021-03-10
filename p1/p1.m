@@ -14,7 +14,7 @@ mod_type = "PAM";
 dbEbN0 = 0:14;
 errors = [];
 for k = dbEbN0
-	[~, ~, err] = transmit(bits, uint64(M), "PAM", k);
+	[~, ~, err] = transmit(bits, uint64(M), mod_type, k);
 	errors = [errors err];
 end
 ber = errors / N;
@@ -23,3 +23,18 @@ semilogy(dbEbN0, ber, '-o');
 xlabel('Eb/N0(dB)'); ylabel('BER');
 grid on;
 legend(strcat(string(M),strcat('-',mod_type)));
+% BPSK modulation
+M = 2;
+mod_type = "PSK";
+dbEbN0 = 0:10;
+errors = [];
+for k = dbEbN0
+	[~, ~, err] = transmit(bits, uint64(M), mod_type, k);
+	errors = [errors err];
+end
+ber = errors / N;
+figure;
+semilogy(dbEbN0, ber, '-o');
+legend(strcat(string(M),strcat('-', mod_type)));
+xlabel('Eb/N0(dB)'); ylabel('BER');
+grid on;

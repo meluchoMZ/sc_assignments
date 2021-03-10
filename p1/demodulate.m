@@ -58,8 +58,28 @@ function demodulated_stream = demodulate_PAM (modulated_stream, modulation_level
 	demodulated_stream = logical(reshape(de2bi(pos-1, 'left-msb')', 1, []));
 end
 
-function demodulated_stream = demodulate_PSK (input_bitstream, modulation_levels)
-	modulated_stream = "PSK modulated stream";
+function demodulated_stream = demodulate_PSK (modulated_stream, modulation_levels)
+	modulated_stream = double(modulated_stream);
+	modulation_levels = double(modulation_levels);
+	% input data size check
+	[stream_rows, stream_cols] = size(modulated_stream);
+	if (stream_rows ~= 1)
+		error("<modulated_stream> must be a 1 dimension vector");
+	end
+	% creating modulation vector
+	modulation = [];
+	for k = 0:1:modulation_levels-1;
+		tita_k = 2*pi*k/modulation_levels;
+		modulation = [modulation, sqrt(1/2)*cos(tita_k) + i*sqrt(1/2)*sin(tita_k)];
+	end
+	% vector replication to parallel contrast of input stream
+	input_matrix = repmat(modulated_stream, length(modulation), 1);
+	% correlate modulated input with PSK modulation
+	input_matrix = input_matrix - modulation';
+	%get the position to which symbol demodulates
+	[~, pos] = min(abs(input_matrix));
+	% returning bitstream
+	demodulated_stream = logical(reshape(de2bi(pos-1, 'left-msb')', 1, []));	
 end
 
 function demodulated_stream = demodulate_QAM (input_bitstream, modulation_levels)

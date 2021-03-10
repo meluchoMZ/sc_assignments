@@ -10,4 +10,8 @@ function [bit_energy, symbol_energy, errors] = transmit (input_stream, modulatio
 	% demodulates received stream
 	output_stream = demodulate(recv_stream, modulation_levels, modulation_type);
 	errors = sum(~(input_stream == output_stream));
+%%	input_stream
+%%	modulated_stream
+%%	recv_stream
+%%	output_stream
 end

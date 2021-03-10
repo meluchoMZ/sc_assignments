@@ -21,16 +21,22 @@ function [noisy_modulated_stream, bit_energy, symbol_energy] = awgn (modulated_s
 	if (dimension == 0) 
 		error('can not work with zero dimenison vectors');
 	end
+	% compute symbol energy
+	symbol_energy = mean(abs(modulated_stream).^2);
+	% compute bit energy
+	bit_energy = symbol_energy / double(bits_per_symbol);
+	% compute N0 
+	N0 = bit_energy / (10^(dbEbN0/10));
+
 	if (dimension == 1)
-		% compute symbol energy
-		symbol_energy = mean(abs(modulated_stream).^2);
-		% compute bit energy
-		bit_energy = symbol_energy / double(bits_per_symbol);
-		% compute N0 
-		N0 = bit_energy / (10^(dbEbN0/10));
 		% creates gaussian noise with mean 0 and tipic deviation N0/2
 		noise = sqrt(N0/2) * randn(size(modulated_stream));
 		% adds noise to the modulated stream
 		noisy_modulated_stream = modulated_stream + noise;
+	elseif ((dimension == 2) & complex)
+		% creates gaussian noise with mean 0 and tipic deviation N0/2
+		real_noise = sqrt(N0/2) * randn(size(modulated_stream));
+		imag_noise = sqrt(N0/2) * randn(size(modulated_stream))*i;
+		noisy_modulated_stream = modulated_stream + real_noise + imag_noise;
 	end
 end
