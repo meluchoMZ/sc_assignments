@@ -2,14 +2,24 @@
 %% Communications software, Computer engineering
 %% Author: Miguel Blanco Godón
 
-
+clear; close all;
 % number of bits for transmission pseudo-random generated
-N = 12;
+N = 10^7;
 bits = rand(1,N)>0.5;
 
 % 4-PAM modulation
 % number of levels of modulation = M
 M = 4;
 mod_type = "PAM";
-%recv_bits = transmit(bits, M, mod_type);
-modulate(bits, uint8(4), "PAM")
+dbEbN0 = 0:14;
+errors = [];
+for k = dbEbN0
+	[~, ~, err] = transmit(bits, uint64(M), "PAM", k);
+	errors = [errors err];
+end
+ber = errors / N;
+figure;
+semilogy(dbEbN0, ber, '-o');
+xlabel('Eb/N0(dB)'); ylabel('BER');
+grid on;
+legend(strcat(string(M),strcat('-',mod_type)));

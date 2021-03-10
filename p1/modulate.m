@@ -3,7 +3,7 @@
 %% Author: Miguel Blanco Godón
 
 
-function [modulated_stream, modulation_type] = modulate (input_bitstream, modulation_levels, modulation_type)
+function [modulated_stream, modulation_type, dimension, complex] = modulate (input_bitstream, modulation_levels, modulation_type)
 	% input checking
 	if (~isa(input_bitstream, 'logical'))
 		error('<input_bitstream> must be a logical vector');
@@ -29,12 +29,18 @@ function [modulated_stream, modulation_type] = modulate (input_bitstream, modula
 	if (strcmp(modulation_type, "PAM"))
 		modulated_stream = modulate_PAM(input_bitstream, modulation_levels);
 		modulation_type = strcat(string(modulation_levels), strcat('-', modulation_type));
+		dimension = 1;
+		complex = false;
 	elseif (strcmp(modulation_type, "PSK"))
 		modulated_stream = modulate_PSK(input_bitstream, modulation_levels);
 		modulation_type = strcat(string(modulation_levels), strcat('-', modulation_type));
+		dimension = 2;
+		complex = true;
 	elseif (strcmp(modulation_type, "QAM"))
 		modulated_stream = modulate_QAM(input_bitstream, modulation_levels);
 		modulation_type = strcat(string(modulation_levels), strcat('-', modulation_type));
+		dimension = 2; 
+		complex = true;
 	else
 		error('Unsupported modulation type. Supported modulations: PAM, PSK, QAM');
 	end
@@ -59,7 +65,7 @@ function modulated_stream = modulate_PAM (input_bitstream, modulation_levels)
 	% reshaping matrix so that it fits the number of bits/symbol
 	input_matrix = reshape(input_bitstream, log2(modulation_levels), []);
 	% modulation_computation
-	modulated_stream = modulation(bi2de(input_matrix', log2(modulation_levels), 'left-msb')+1);
+	modulated_stream = modulation(bi2de(input_matrix', 'left-msb')+1);
 end
 
 function modulated_stream = modulate_PSK (input_bitstream, modulation_levels)
