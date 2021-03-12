@@ -1,4 +1,6 @@
 %% Returns a M-PAM modulation vector
+%% Comunications software, Computer engineering
+%% Author: Miguel Blanco Godón
 
 function modulation = pam (modulation_levels)
 	% creating modulation vector

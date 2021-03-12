@@ -1,4 +1,6 @@
 %% Returns a M-PSK modulation vector
+%% Communications software, Computer engineering
+%% Author: Miguel Blanco Godón
 
 function modulation = psk (modulation_levels)
 	% creating modulation vector
