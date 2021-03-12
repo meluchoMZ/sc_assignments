@@ -1,9 +1,9 @@
-%% Function that modulates a bit stream into M-PAM, M-PSK, M-QAM, M-QAM modulated stream
+%% Function that modulates a bit stream into M-PAM, M-PSK, M-QAM modulated stream
 %% Communications software, Computer engineering
 %% Author: Miguel Blanco Godón
 
 
-function [modulated_stream, modulation_type, dimension, complex] = modulate (input_bitstream, modulation_levels, modulation_type)
+function [modulated_stream, modulation, dimension, complex] = modulate (input_bitstream, modulation_levels, modulation_type)
 	% input checking
 	if (~isa(input_bitstream, 'logical'))
 		error('<input_bitstream> must be a logical vector');
@@ -25,72 +25,37 @@ function [modulated_stream, modulation_type, dimension, complex] = modulate (inp
 		error('<modulation_type> must be a string or char sequence');
 	end
 	
+	modulation = strcat(string(modulation_levels), strcat('-', modulation_type));
+
+	input_bitstream = double(input_bitstream);
+	modulation_levels = double(modulation_levels);
+	% input data size check
+	[bitstream_rows, bitstream_cols] = size(input_bitstream);
+	if (bitstream_rows ~= 1)
+		error("<input_bitstream> must be a 1 dimension vector");
+	end
+	if (mod(bitstream_cols, log2(modulation_levels)) ~= 0)
+		error("<input_bitstream> length must be multiple of log2 <modulation_levels>");
+	end
+
 	% modulation type checking and modulation computation
 	if (strcmp(modulation_type, "PAM"))
-		modulated_stream = modulate_PAM(input_bitstream, modulation_levels);
-		modulation_type = strcat(string(modulation_levels), strcat('-', modulation_type));
+		modulation = pam(modulation_levels);
 		dimension = 1;
 		complex = false;
 	elseif (strcmp(modulation_type, "PSK"))
-		modulated_stream = modulate_PSK(input_bitstream, modulation_levels);
-		modulation_type = strcat(string(modulation_levels), strcat('-', modulation_type));
+		modulation = psk(modulation_levels);
 		dimension = 2;
 		complex = true;
 	elseif (strcmp(modulation_type, "QAM"))
-		modulated_stream = modulate_QAM(input_bitstream, modulation_levels);
-		modulation_type = strcat(string(modulation_levels), strcat('-', modulation_type));
+		modulation = qam(modulation_levels);
 		dimension = 2; 
 		complex = true;
 	else
 		error('Unsupported modulation type. Supported modulations: PAM, PSK, QAM');
 	end
-end
-
-function modulated_stream = modulate_PAM (input_bitstream, modulation_levels)
-	input_bitstream = double(input_bitstream);
-	modulation_levels = double(modulation_levels);
-	% input data size check
-	[bitstream_rows, bitstream_cols] = size(input_bitstream);
-	if (bitstream_rows ~= 1)
-		error("<input_bitstream> must be a 1 dimension vector");
-	end
-	if (mod(bitstream_cols, log2(modulation_levels)) ~= 0)
-		error("<input_bitstream> length must be multiple of <modulation_levels>");
-	end
-	% creating modulation vector
-	modulation = [];
-	for k = 0:1:modulation_levels-1
-		modulation = [modulation, 2*k+1-modulation_levels];
-	end
 	% reshaping matrix so that it fits the number of bits/symbol
 	input_matrix = reshape(input_bitstream, log2(modulation_levels), []);
 	% modulation_computation
 	modulated_stream = modulation(bi2de(input_matrix', 'left-msb')+1);
-end
-
-function modulated_stream = modulate_PSK (input_bitstream, modulation_levels)
-	input_bitstream = double(input_bitstream);
-	modulation_levels = double(modulation_levels);
-	% input data size check
-	[bitstream_rows, bitstream_cols] = size(input_bitstream);
-	if (bitstream_rows ~= 1)
-		error("<input_bitstream> must be a 1 dimension vector");
-	end
-	if (mod(bitstream_cols, log2(modulation_levels)) ~= 0)
-		error("<input_bitstream> length must be multiple of <modulation_levels>");
-	end
-	% creating modulation vector
-	modulation = [];
-	for k = 0:1:modulation_levels-1
-		tita_k = 2*pi*k/modulation_levels;
-		modulation = [modulation, sqrt(1/2)*cos(tita_k) + i*sqrt(1/2)*sin(tita_k)];
-	end
-	% reshaping matrix to that it fits in the number of bits/symbol
-	input_matrix = reshape(input_bitstream, log2(modulation_levels), []);
-	% modulation_computation
-	modulated_stream = modulation(bi2de(input_matrix', 'left-msb')+1);
-end
-
-function modulated_stream = modulate_QAM (input_bitstream, modulation_levels)
-	modulated_stream = "QAM modulated stream";
 end
