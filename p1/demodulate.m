@@ -42,8 +42,8 @@ function demodulated_stream  = demodulate (modulated_stream, modulation_levels, 
 	end
 	% vector replication to parallel contrast of input stream
 	input_matrix = repmat(modulated_stream, length(modulation), 1);
-	% correlate modulated input with PAM modulation
-	input_matrix = input_matrix - modulation';
+	% correlate modulated input with modulation
+	input_matrix = input_matrix - modulation.';
 	% get the position to which symbol demodulates
 	[~, pos] = min(abs(input_matrix));
 	% returning bitstream

@@ -14,7 +14,7 @@ dbEbN0 = 0:14;
 for s = 1:length(M)
 	errors = [];
 	for k = dbEbN0
-		[~, ~, err] = transmit(bits, uint64(M(s)), mod_type(s), k);
+		[~,be , err] = transmit(bits, uint64(M(s)), mod_type(s), k);
 		errors = [errors err];
 	end
 	ber = errors / N;

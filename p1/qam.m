@@ -3,6 +3,6 @@
 %% Author: Miguel Blanco Godón
 
 function modulation = qam(modulation_levels)
-	% temporary  while not further implementattion
-	modulation = pam(modulation_levels);
+	% for modulation using communications toolbox's qammod
+	modulation = qammod(0:modulation_levels-1, modulation_levels);
 end

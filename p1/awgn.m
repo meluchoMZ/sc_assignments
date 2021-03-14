@@ -36,7 +36,7 @@ function [noisy_modulated_stream, bit_energy, symbol_energy] = awgn (modulated_s
 	elseif ((dimension == 2) & complex)
 		% creates gaussian noise with mean 0 and tipic deviation N0/2
 		real_noise = sqrt(N0/2) * randn(size(modulated_stream));
-		imag_noise = sqrt(N0/2) * randn(size(modulated_stream))*i;
+		imag_noise = sqrt(N0/2) * randn(size(modulated_stream))*1j;
 		noisy_modulated_stream = modulated_stream + real_noise + imag_noise;
 	end
 end
