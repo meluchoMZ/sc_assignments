@@ -3,7 +3,7 @@
 %% Author: Miguel Blanco Godón
 
 
-function [modulated_stream, modulation, dimension, complex] = modulate (input_bitstream, modulation_levels, modulation_type)
+function [modulated_stream, modulation, dimension, complex] = modulate (input_bitstream, modulation_levels, modulation_type, ordering)
 	% input checking
 	if (~isa(input_bitstream, 'logical'))
 		error('<input_bitstream> must be a logical vector');
@@ -40,15 +40,15 @@ function [modulated_stream, modulation, dimension, complex] = modulate (input_bi
 
 	% modulation type checking and modulation computation
 	if (strcmp(modulation_type, "PAM"))
-		modulation = pam(modulation_levels);
+		modulation = pam(modulation_levels, ordering);
 		dimension = 1;
 		complex = false;
 	elseif (strcmp(modulation_type, "PSK"))
-		modulation = psk(modulation_levels);
+		modulation = psk(modulation_levels, ordering);
 		dimension = 2;
 		complex = true;
 	elseif (strcmp(modulation_type, "QAM"))
-		modulation = qam(modulation_levels);
+		modulation = qam(modulation_levels, ordering);
 		dimension = 2; 
 		complex = true;
 	else

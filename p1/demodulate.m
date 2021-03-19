@@ -3,7 +3,7 @@
 %% Author: Miguel Blanco Godón
 
 
-function demodulated_stream  = demodulate (modulated_stream, modulation_levels, modulation_type)
+function demodulated_stream  = demodulate (modulated_stream, modulation_levels, modulation_type, ordering)
 	% input checking
 	if (~isa(modulation_levels, 'uint8')&~isa(modulation_levels, 'uint16')&~isa(modulation_levels, 'uint32')&~isa(modulation_levels, 'uint64'))
 		error('<modulation_levels> must be a positive integer power of 2');
@@ -32,11 +32,11 @@ function demodulated_stream  = demodulate (modulated_stream, modulation_levels, 
 
 	% modulation type checking and modulation computation
 	if (strcmp(modulation_type, "PAM"))
-		modulation = pam(modulation_levels);
+		modulation = pam(modulation_levels, ordering);
 	elseif (strcmp(modulation_type, "PSK"))
-		modulation = psk(modulation_levels);
+		modulation = psk(modulation_levels, ordering);
 	elseif (strcmp(modulation_type, "QAM"))
-		modulation = qam(modulation_levels);
+		modulation = qam(modulation_levels, ordering);
 	else
 		error('Unsupported modulation type. Supported modulations: PAM, PSK, QAM');
 	end
