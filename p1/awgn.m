@@ -2,7 +2,7 @@
 %% Communications software, Computer engineering
 %% Author: Miguel Blanco Godón
 
-function [noisy_modulated_stream, bit_energy, symbol_energy] = awgn (modulated_stream, bits_per_symbol, dimension, complex, dbEbN0)
+function [noisy_modulated_stream, bit_energy, symbol_energy, N0] = awgn (modulated_stream, bits_per_symbol, dimension, complex, dbEbN0)
 	if (~isa(dimension, 'uint8')&~isa(dimension, 'uint16')&~isa(dimension, 'uint32')&~isa(dimension, 'uint64'))
 		error('<dimension> must be a an unsigned integer');
 	end
