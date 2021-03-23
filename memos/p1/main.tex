@@ -43,7 +43,7 @@ Concretamente, as modulacións avaliadas son 2-PSK, 4-PSK, 16-QAM, 64-QAM.
 \section*{Arquitectura do sistema}
 O sistema está composto por tres partes, un modulador dixital, unha canle AWGN e un demodulador dixital. Un sistema de comunicación está formado por, como mínimo, un emisor, unha canle de comunicación en un receptor. O modulador forma parte do emisor, a canle AWGN é o medio para a comunicación e o demodulador forma parte do receptor.
 \subsection*{Modulador dixital}
-É a primeira parte do sistema, a cal que encarga de convirtir o fluxo de bits un conxunto de símbolos dependentes da modulación. Para iso basámonos na representación discreta equivalente, a través dun método denominado \textit{representación vectorial de sinais}. Este método, que forma parte do análise espacial de sinais, foi desenvolvido primeiramente por V.A.Kotel'nikov en 1947. A idea consiste en representar cada elemento dun conxunto de sinais transmitidas mediante un vector M-dimensional, sendo N o número de funcións básicas ortonormais necesarias para unha representación xeométrica única dos sinais transmitidos.
+É a primeira parte do sistema, a cal que encarga de convirtir o fluxo de bits un conxunto de símbolos dependentes da modulación. Para iso basámonos na representación discreta equivalente, a través dun método denominado \textit{representación vectorial de sinais}. Este método, que forma parte do análise espacial de sinais, foi desenvolvido primeiramente por V.A.Kotel'nikov en 1947. A idea consiste en representar cada elemento dun conxunto de sinais transmitidas mediante un vector N-dimensional, sendo N o número de funcións básicas ortonormais necesarias para unha representación xeométrica única dos sinais transmitidos.
 Un parámetro importante na modulación, aparte do tipo, é o número de niveis. O número de niveis dunha modulación dánolo o valor de M, o número de sinais necesarias, e implica que cada símbolo conterá  a información de $log_2{M}$ bits.
 As bases a usar dependen de cada modulación:
 \begin{itemize}
@@ -81,7 +81,7 @@ input_matrix = reshape(input_bitstream, log2(modulation_levels), []);
 % modulation_computation
 modulated_stream = modulation(bi2de(input_matrix', 'left-msb')+1);
 \end{lstlisting}
-Como se pode observar no código, ao primeiro obtense o vector de símbolos para a modulación. Despois, reorganízase o vector como unha matriz de dúas dimensións, de tal xeito que en cada columna quede o equivalente a un símbolo, e por último, indexamos o vector de símbolos da modulación a partir dos da matriz;que pasa a ser outro vector debido a que se fai unha conversión por columnas a decimal, o que nos dá a posición (comezando a contar dende 0) do símbolo no vector de símbolos da modulación. Súmaselle 1 xa que matlab indexa dende 1 ata N. Así obtense o vector de símbolos modulados. Todo este proceso pódese facer chamando á función do módulo \textit{modulate}:
+Como se pode observar no código, ao primeiro obtense o vector de símbolos para a modulación. Despois, reorganízase o vector como unha matriz de dúas dimensións, de tal xeito que en cada columna quede o equivalente a un símbolo, e por último, indexamos o vector de símbolos da modulación a partir dos da matriz;que pasa a ser outro vector debido a que se fai unha conversión por columnas a decimal, o que nos dá a posición (comezando a contar dende 0) do símbolo no vector de símbolos da modulación. Súmaselle 1 xa que Matlab indexa dende 1 ata N. Así obtense o vector de símbolos modulados. Todo este proceso pódese facer chamando á función do módulo \textit{modulate}:
 \begin{lstlisting}[language=matlab]
 bits = randn(1,12)>0.5
 
@@ -166,7 +166,7 @@ input_matrix = input_matrix - modulation.';
 % returning bitstream
 demodulated_stream = logical(reshape(de2bi(pos-1, 'left-msb')', 1, []));
 \end{lstlisting}
-Do mesmo xeito ca no modulador, obtense o vector de símbolos da modulación. Replícanse as filas do vector de símbolos para poder calcular a distancia euclídea a todos os símbolos cunha soa instrución. Despois extráese a posición do símbolo na constelación a través do mínimo, que matlab faino por columnas, e por último simplemente se desfai a tradución, pasando a binario as posicións correspondentes. Pódese observar o seguinte exemplo:
+Do mesmo xeito ca no modulador, obtense o vector de símbolos da modulación. Replícanse as filas do vector de símbolos para poder calcular a distancia euclídea a todos os símbolos cunha soa instrución. Despois extráese a posición do símbolo na constelación a través do mínimo, que Matlab faino por columnas, e por último simplemente se desfai a tradución, pasando a binario as posicións correspondentes. Pódese observar o seguinte exemplo:
 \begin{lstlisting}[language=matlab]
 demodulate(recv, uint8(4), "PAM", 'bin')
 
@@ -182,7 +182,59 @@ Onde se pode observar que houbo un erro da demodulación.
 \item \textbf{psk.m}: devolve un vector cos símbolos da modulación M-PSK. Concretamente, calcula os vectores a partires da expresión $s_i = \sqrt{\frac{1}{2}} cos(\theta_k) + \sqrt{\frac{1}{2}} sen(\theta_k)j \quad \forall k = 0,...,M-1$ onde $\theta_k = \frac{2\pi k}{M}$.
 \item \textbf{qam.m}: devolve un vector cos símbolos da modulación M-QAM. Bótase man da función \textit{qammod} do \textit{Communications toolbox} de Matlab. 
 \end{itemize}
-Isto todo xúntase no script \textit{p1.m} no cal se executan as transmisións e xéranse as figuras.
+Isto todo xúntase no script \textit{p1.m} no cal se executan as transmisións e xéranse as figuras. Para o cómputo das BER empíricas, simplemente se dividen o número de erros de cadra transmisión entre o número de bits transmitidos. Para o cómputo das BER teóricas, por outra banda, realízase por medio de substitucións nas fórmulas teóricas dos datos concretos para cada transmisión.
 \section*{Resultados}
+O script xera 9 gráficas. As primeiras 5 figuras amosan as BER empíricas e teóricas das modulacións 4-PAM, BPSK, QPSK, 16-QAM, 64-QAM. Nas 4 restantes temos:
+\begin{itemize}
+\item \textbf{Figura 6}: BER para BPSK, QPSK, 16-QAM, 64-QAM utilizando todas Gray Mapping.
+\begin{figure}[htb]
+\centering 
+\includegraphics{figura6.png}
+\caption{Figura 6}
+\end{figure}
+\item \textbf{Figura 7}: BER para BPSK natural, QPSK con e sen Gray Mapping e a BER teórica de QPSK.
+\begin{figure}[htb]
+\centering 
+\includegraphics{figura7.png}
+\caption{Figura 6}
+\end{figure}
+\item \textbf{Figura 8}: BER para 16-QAM con e sen Gray Mapping e a súa correspondente BER teórica.
+\begin{figure}[htb]
+\centering 
+\includegraphics{figura8.png}
+\caption{Figura 6}
+\end{figure}
+\item \textbf{Figura 9}: BER para 64-QAM con e sen Gray Mapping e a súa BER teórica.
+\begin{figure}[htb]
+\centering 
+\includegraphics{figura9.png}
+\caption{Figura 6}
+\end{figure}
+\end{itemize}
+De entre todas as figuras podemos salientar dúas cousas: primeiro, que cantos menos niveis teña unha modulación, menor a súa probabilidade de erro de símbolo e, por tanto, mellor rendemento; e segundo, que ao utilizar Gray Mapping para minimizar o erro de bit (malia non modificar o erro de símbolo) obtemos o mellor rendemento posíbel, xa que coincide coa probabilidade de erro teórica. Outro aspecto interesante é o relacionado co parámetro de simulación $E_b/N_0$. Este parámetro é unha medida normalizada da «relación sinal ruido» da canle, polo cal canto maior sexa a «cantidade de sinal» respecto á «cantidade de ruido», menos relevante será a interferencia da canle AWGN nos símbolos transmitidos, derivando en unha menor tasa de fallo. En síntese, o valor de $E_b/N_0$ é inversamente proporcional á tasa de erro.
+Os valores concretos de BER vense completamente ao executar o script, debido a que se pode ampliar.
+Tamen podemos caer na tentación de pensar que PSK é o mellor esquema de modulación, debido a que ten a menor tasa de erros, pero isto só se cumpre se temos poucos niveis da modulación, como se pode observar nas «Figure 5» e «Figure 6».
+\begin{figure}[htb]
+\centering
+\includegraphics{16_psk.png}
+\caption{Valores de BER para 16-PSK con e sen Gray Mapping}
+\end{figure}
+Este aumento tan drástico das tasas de erro en PSK débese á forma da constelación, pois aumentar o número de niveis, implica aumentar o número de símbolos veciños no mesmo espazo, polo cal dá maior tasa de erro, como se pode observar na imaxe das constelacións.
+\begin{figure}[htb]
+\centering
+\includegraphics{4_8_psk_const.png}
+\caption{Constelación de QPSK e 8-PSK. Pódese ver como ao aumentar M aumenta o número de símbolos sobre a circunferencia, pero non aumenta o tamaño da mesma, provocando que diminúa a separación e as colas de probabilidade de superpoñan máis.}
+\end{figure}
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.5]{psk_16_const.png}
+\caption{Constelación da modulación 16-PSK}
+\end{figure}
 \section*{Conclusión}
+Ante a vista dos resultados anteriores, vemos que o mellor esquema de modulación é PSK, sempre que traballemos con valores baixos de M. Pero podemos comprender o uso dos dous tipos de modulación tendo en conta que IEEE 802.11n é un estándar de comunicación inalámbrico. Hoxe en día, a maior parte dos usuarios conéctanse a redes inalámbricas dende dispositivos pequenos e portables, onde hai múltiples dispositivos de distintos propósitos emitindo ondas de radio, xa sexa para comunicarse ou como residuo. O método da modulación soluciona inconvenientes particularmente importantes neste medio, como o tema do tamaño dos dispositivos necesarios, pois a lonxitude de onda é inversamente proporcional á frecuencia ($\lambda = \frac{c}{f}$), o que permite dispoñer de antenas moi pequenas, que poden ser inseridas dentro de equipos informáticos compactos.\newline Ademais, cando medimos a calidade dunha comunicación, podemos medir dous parámetros:
+\begin{itemize}
+\item \textbf{Velocidadade da comunicación}: supoñendo un período de símbolo igual, a máis niveis de modulación, enviamos máis información na mesma unidade de tempo.
+\item \textbf{Tasa de fallos}: en entornos de moito ruido, debemos usar modulacións que nos permitan obter baixas tasa de erros para valores baixos de $E_b/N_0$.
+\end{itemize}
+Tendo en conta iso, podemos ver que as modulacións BPSK e QPSK son moi boas para entornos con moita interferencia, porque son as que conseguen a menor tasa de fallos, sobre todo aplicando Gray Mapping, pero en entornos onde a interferencia sexa baixa podemos aumentar a velocidade da comunicación utilizando esquemas de modulación que nos permitan enviar moitos bits por símbolo con pouca tasa de erros, onde son particularmente boas as modulacións QAM. 
 \end{document}

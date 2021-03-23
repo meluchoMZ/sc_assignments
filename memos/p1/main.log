@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2021.2.5)  22 MAR 2021 23:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2021.2.5)  23 MAR 2021 18:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -354,28 +354,71 @@ Overfull \hbox (1.76031pt too wide) in paragraph at lines 167--168
 [][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[3] [4] (./main.aux) ) 
+[3]
+<figura6.png, id=19, 421.575pt x 316.18124pt>
+File: figura6.png Graphic file (type png)
+<use figura6.png>
+Package pdftex.def Info: figura6.png  used on input line 192.
+(pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
+<figura7.png, id=20, 414.04688pt x 321.45094pt>
+File: figura7.png Graphic file (type png)
+<use figura7.png>
+Package pdftex.def Info: figura7.png  used on input line 198.
+(pdftex.def)             Requested size: 414.04585pt x 321.45015pt.
+<figura8.png, id=21, 414.04688pt x 321.45094pt>
+File: figura8.png Graphic file (type png)
+<use figura8.png>
+Package pdftex.def Info: figura8.png  used on input line 204.
+(pdftex.def)             Requested size: 414.04585pt x 321.45015pt.
+<figura9.png, id=22, 414.04688pt x 321.45094pt>
+File: figura9.png Graphic file (type png)
+<use figura9.png>
+Package pdftex.def Info: figura9.png  used on input line 210.
+(pdftex.def)             Requested size: 414.04585pt x 321.45015pt.
+<16_psk.png, id=23, 421.575pt x 316.18124pt>
+File: 16_psk.png Graphic file (type png)
+<use 16_psk.png>
+Package pdftex.def Info: 16_psk.png  used on input line 219.
+(pdftex.def)             Requested size: 421.57396pt x 316.18047pt.
+<4_8_psk_const.png, id=24, 475.7775pt x 251.94125pt>
+File: 4_8_psk_const.png Graphic file (type png)
+<use 4_8_psk_const.png>
+Package pdftex.def Info: 4_8_psk_const.png  used on input line 225.
+(pdftex.def)             Requested size: 475.77632pt x 251.94063pt.
+
+Overfull \hbox (20.53221pt too wide) in paragraph at lines 225--226
+ [][] 
+ []
+
+<psk_16_const.png, id=25, 853.1875pt x 854.19125pt>
+File: psk_16_const.png Graphic file (type png)
+<use psk_16_const.png>
+Package pdftex.def Info: psk_16_const.png  used on input line 230.
+(pdftex.def)             Requested size: 426.59271pt x 427.09459pt.
+[4] [5 <./figura6.png (PNG copy)>] [6 <./figura7.png (PNG copy)> <./figura8.png
+ (PNG copy)>] [7 <./figura9.png (PNG copy)> <./16_psk.png (PNG copy)>] [8 <./4_
+8_psk_const.png (PNG copy)>] [9 <./psk_16_const.png>] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 5065 strings out of 492615
- 66879 string characters out of 6131391
- 356579 words of memory out of 5000000
- 8886 multiletter control sequences out of 15000+600000
+ 5101 strings out of 492615
+ 67451 string characters out of 6131391
+ 355579 words of memory out of 5000000
+ 8914 multiletter control sequences out of 15000+600000
  27831 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,11n,45p,718b,1784s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.en
-c}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/u
-rw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/
-uplri8a.pfb>
-Output written on main.pdf (4 pages, 108147 bytes).
+ 41i,11n,45p,986b,1784s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share
+/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpa
+zo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on main.pdf (9 pages, 274711 bytes).
 PDF statistics:
- 50 PDF objects out of 1000 (max. 8388607)
- 35 compressed objects within 1 object stream
+ 75 PDF objects out of 1000 (max. 8388607)
+ 47 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
