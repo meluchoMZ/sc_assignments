@@ -196,22 +196,22 @@ O script xera 9 gráficas. As primeiras 5 figuras amosan as BER empíricas e te�
 \begin{figure}[htb]
 \centering 
 \includegraphics{figura7.png}
-\caption{Figura 6}
+\caption{Figura 7}
 \end{figure}
 \item \textbf{Figura 8}: BER para 16-QAM con e sen Gray Mapping e a súa correspondente BER teórica.
 \begin{figure}[htb]
 \centering 
 \includegraphics{figura8.png}
-\caption{Figura 6}
+\caption{Figura 8}
 \end{figure}
 \item \textbf{Figura 9}: BER para 64-QAM con e sen Gray Mapping e a súa BER teórica.
 \begin{figure}[htb]
 \centering 
 \includegraphics{figura9.png}
-\caption{Figura 6}
+\caption{Figura 9}
 \end{figure}
 \end{itemize}
-De entre todas as figuras podemos salientar dúas cousas: primeiro, que cantos menos niveis teña unha modulación, menor a súa probabilidade de erro de símbolo e, por tanto, mellor rendemento; e segundo, que ao utilizar Gray Mapping para minimizar o erro de bit (malia non modificar o erro de símbolo) obtemos o mellor rendemento posíbel, xa que coincide coa probabilidade de erro teórica. Outro aspecto interesante é o relacionado co parámetro de simulación $E_b/N_0$. Este parámetro é unha medida normalizada da «relación sinal ruido» da canle, polo cal canto maior sexa a «cantidade de sinal» respecto á «cantidade de ruido», menos relevante será a interferencia da canle AWGN nos símbolos transmitidos, derivando en unha menor tasa de fallo. En síntese, o valor de $E_b/N_0$ é inversamente proporcional á tasa de erro.
+De entre todas as figuras podemos salientar dúas cousas: primeiro, que cantos menos niveis teña unha modulación, menor a súa probabilidade de erro de símbolo e, por tanto, mellor rendemento; e segundo, que ao utilizar Gray Mapping para minimizar o erro de bit (malia non modificar o erro de símbolo) obtemos o mellor rendemento posíbel, xa que coincide coa probabilidade de erro teórica. A probabilidade de símbolo non ten por qué coincidir coa probabilidade de bit posto que un erro de símbolo pode implicar máis dun erro de bit. Gray Mapping reduce a tasa de erros de bit xa que reordea a constelación de tal xeito que un símbolo só teña símbolos veciños nos que cambie un bit. Isto fai que se manteña o erro de símbolo, pero a tasa de erros de bit se divida entre $log_2(M)$. Usando Gray Mapping obtemos unha tasas de erro de bit semelellantes ás teóricas. Outro aspecto interesante é o relacionado co parámetro de simulación $E_b/N_0$. Este parámetro é unha medida normalizada da «relación sinal ruido» da canle, polo cal canto maior sexa a «cantidade de sinal» respecto á «cantidade de ruido», menos relevante será a interferencia da canle AWGN nos símbolos transmitidos, derivando en unha menor tasa de fallo. En síntese, o valor de $E_b/N_0$ é inversamente proporcional á tasa de erro.
 Os valores concretos de BER vense completamente ao executar o script, debido a que se pode ampliar.
 Tamen podemos caer na tentación de pensar que PSK é o mellor esquema de modulación, debido a que ten a menor tasa de erros, pero isto só se cumpre se temos poucos niveis da modulación, como se pode observar nas «Figure 5» e «Figure 6».
 \begin{figure}[htb]
@@ -231,7 +231,7 @@ Este aumento tan drástico das tasas de erro en PSK débese á forma da constela
 \caption{Constelación da modulación 16-PSK}
 \end{figure}
 \section*{Conclusión}
-Ante a vista dos resultados anteriores, vemos que o mellor esquema de modulación é PSK, sempre que traballemos con valores baixos de M. Pero podemos comprender o uso dos dous tipos de modulación tendo en conta que IEEE 802.11n é un estándar de comunicación inalámbrico. Hoxe en día, a maior parte dos usuarios conéctanse a redes inalámbricas dende dispositivos pequenos e portables, onde hai múltiples dispositivos de distintos propósitos emitindo ondas de radio, xa sexa para comunicarse ou como residuo. O método da modulación soluciona inconvenientes particularmente importantes neste medio, como o tema do tamaño dos dispositivos necesarios, pois a lonxitude de onda é inversamente proporcional á frecuencia ($\lambda = \frac{c}{f}$), o que permite dispoñer de antenas moi pequenas, que poden ser inseridas dentro de equipos informáticos compactos.\newline Ademais, cando medimos a calidade dunha comunicación, podemos medir dous parámetros:
+Ante a vista dos resultados anteriores, vemos que o mellor esquema de modulación é PSK, sempre que traballemos con valores baixos de M. Pero podemos comprender o uso dos dous tipos de modulación tendo en conta que IEEE 802.11n é un estándar de comunicación inalámbrico. Hoxe en día, a maior parte dos usuarios conéctanse a redes inalámbricas dende dispositivos pequenos e portables, onde hai múltiples dispositivos de distintos propósitos emitindo ondas de radio, xa sexa para comunicarse ou como residuo. O método da modulación soluciona inconvenientes particularmente importantes neste medio, como o tema do tamaño dos dispositivos necesarios, pois a lonxitude de onda é inversamente proporcional á frecuencia ($\lambda = \frac{c}{f}$), o que permite dispoñer de antenas moi pequenas, que poden ser inseridas dentro de equipos informáticos compactos se se usan portadoras de alta frecuencia.\newline Ademais, cando medimos a calidade dunha comunicación, podemos medir dous parámetros:
 \begin{itemize}
 \item \textbf{Velocidadade da comunicación}: supoñendo un período de símbolo igual, a máis niveis de modulación, enviamos máis información na mesma unidade de tempo.
 \item \textbf{Tasa de fallos}: en entornos de moito ruido, debemos usar modulacións que nos permitan obter baixas tasa de erros para valores baixos de $E_b/N_0$.
