@@ -39,6 +39,34 @@ title('Gray + QPSK raw vs Gray + QPSK + repetition encoding'); xlabel('E_b/N_0(d
 legend([r3, r5, raw], 'Repetition encoding r = 3', 'Repetition encoding r = 5', 'Raw QPSK');
 
 % Hamming encoding
+errors_qpsk = [];
+errors_qam = [];
+errors_ham_qpsk = [];
+errors_ham_qam = [];
+for k = dbEbN0
+	[bit_energy, ~, err, n0] = transmit(bits, uint64(4), 'PSK', 'hamming', 7, k, 'gray');
+	errors_ham_qpsk = [errors_ham_qpsk err];
+	[bit_energy, ~, err, n0] = transmit(bits, uint64(16), 'QAM', 'hamming', 7, k, 'gray');
+	errors_ham_qam = [errors_ham_qam err];
+	[bit_energy, ~, err, n0] = transmit(bits, uint64(4), 'PSK', 'repetition', 0, k, 'gray');
+	errors_qpsk = [errors_qpsk err];
+	[bit_energy, ~, err, n0] = transmit(bits, uint64(16), 'QAM', 'repetition', 0, k, 'gray');
+	errors_qam = [errors_qam err];
+end
+ber0 = sym(errors_ham_qpsk)/sym(N);
+ber1 = sym(errors_ham_qam)/sym(N);
+ber2 = sym(errors_qpsk)/sym(N);
+ber3 = sym(errors_qam)/sym(N);
+figure;
+g0 = semilogy(dbEbN0, ber0, '-o');
+hold on; 
+g1 = semilogy(dbEbN0, ber1, '-*');
+g2 = semilogy(dbEbN0, ber2, '-d');
+g3 = semilogy(dbEbN0, ber3, '-s');
+grid on;
+title('PSK+16QAM vs Hamming(7,4)'); xlabel('E_b/N_0(dB)'); ylabel('BER');
+legend([g0, g1, g2, g3], 'QPSK + encoding', '16QAM + encoding', 'QPSK raw', '16QAM raw');
+
 
 % First convolutional code
 errors_qpsk = [];
@@ -66,8 +94,8 @@ g1 = semilogy(dbEbN0, ber1, '-*');
 g2 = semilogy(dbEbN0, ber2, '-d');
 g3 = semilogy(dbEbN0, ber3, '-s');
 grid on;
-title('PSK+QAM vs 1^{st} convolutional encoding'); xlabel('E_b/N_0(dB)'); ylabel('BER');
-legend([g0, g1, g2, g3], 'QPSK + encoding', 'QAM + encoding', 'QPSK raw', 'QAM raw');
+title('PSK+16QAM vs 1^{st} convolutional encoding'); xlabel('E_b/N_0(dB)'); ylabel('BER');
+legend([g0, g1, g2, g3], 'QPSK + encoding', '16QAM + encoding', 'QPSK raw', '16QAM raw');
 
 % Second convolutional code
 errors_qpsk = [];
@@ -95,6 +123,6 @@ g1 = semilogy(dbEbN0, ber1, '-*');
 g2 = semilogy(dbEbN0, ber2, '-d');
 g3 = semilogy(dbEbN0, ber3, '-s');
 grid on;
-title('PSK+QAM vs 2^{nd} convolutional encoding'); xlabel('E_b/N_0(dB)'); ylabel('BER');
-legend([g0, g1, g2, g3], 'QPSK + encoding', 'QAM + encoding', 'QPSK raw', 'QAM raw');
+title('PSK+16QAM vs 2^{nd} convolutional encoding'); xlabel('E_b/N_0(dB)'); ylabel('BER');
+legend([g0, g1, g2, g3], 'QPSK + encoding', '16QAM + encoding', 'QPSK raw', '16QAM raw');
 

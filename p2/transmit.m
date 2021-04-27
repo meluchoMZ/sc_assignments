@@ -8,6 +8,8 @@ function [bit_energy, symbol_energy, errors, N0] = transmit (input_stream, modul
 		if (strcmp(encoding_type, 'repetition'))
 			[encoded_stream, n, k] = rept_code(input_stream, 'encode', code_size);
 		elseif (strcmp(encoding_type, 'hamming'))
+			[encoded_stream, n, k] = hamming_code(input_stream, 'encode', code_size);
+			encoded_stream = logical(encoded_stream);
 		elseif (strcmp(encoding_type, 'convolutional-I'))
 			trellis = poly2trellis(3, [7 5 6]);
 			encoded_stream = convenc(input_stream, trellis);
@@ -36,6 +38,7 @@ function [bit_energy, symbol_energy, errors, N0] = transmit (input_stream, modul
 		if (strcmp(encoding_type, 'repetition'))
 			[output_stream, n, k] = rept_code(demodulated_stream, 'decode', code_size);
 		elseif (strcmp(encoding_type, 'hamming'))
+			[output_stream, n, k] = hamming_code(demodulated_stream, 'decode', code_size);
 		elseif (strcmp(encoding_type, 'convolutional-I'))
 			trellis = poly2trellis(3, [7 5 6]);
 			output_stream = vitdec(demodulated_stream, trellis, 15, 'trunc', 'hard');
