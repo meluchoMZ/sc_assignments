@@ -9,7 +9,7 @@
 %% ERRORS: if the op parameter does not match any option, an error is raised.
 
 function [output_stream, n, k] = rept_code(input_stream, operation_code, R)
-	n = 1; k = R;
+	n = R; k = 1;
 	if (strcmp(operation_code, 'encode'))
 		output_stream = reshape(repmat(input_stream, R, 1), 1, []);
 		return;

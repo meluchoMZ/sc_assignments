@@ -19,6 +19,10 @@ function [bit_energy, symbol_energy, errors, N0] = transmit (input_stream, modul
 			encoded_stream = convenc(input_stream, trellis);
 			k = 1; n = 3;
 		elseif (strcmp(encoding_type, 'convolutional-III'))
+			% to augment the encodig gain, encoding length is augmented
+			trellis = poly2trellis(4, [15, 7, 5, 6]);
+			encoded_stream = convenc(input_stream, trellis);
+			k = 1; n = 4;
 		else 
 			error('Unsupported encoding type');
 		end
@@ -46,6 +50,8 @@ function [bit_energy, symbol_energy, errors, N0] = transmit (input_stream, modul
 			trellis = poly2trellis(3, [3 5 6]);
 			output_stream = vitdec(demodulated_stream, trellis, 15, 'trunc', 'hard');
 		elseif (strcmp(encoding_type, 'convolutional-III'))
+			trellis = poly2trellis(4, [15, 7, 5, 6]);
+			output_stream = vitdec(demodulated_stream, trellis, 20, 'trunc', 'hard');
 		else
 			error('Unsupported encoding type');
 		end
@@ -54,8 +60,4 @@ function [bit_energy, symbol_energy, errors, N0] = transmit (input_stream, modul
 	end
 	% error computing
 	errors = sum(~(input_stream == output_stream));
-%%	input_stream
-%%	modulated_stream
-%%	recv_stream
-%%	output_stream
 end

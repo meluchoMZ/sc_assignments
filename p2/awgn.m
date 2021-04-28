@@ -29,8 +29,8 @@ function [noisy_modulated_stream, bit_energy, symbol_energy, N0] = awgn (modulat
 		bit_energy = symbol_energy / double(bits_per_symbol);
 		N0 = bit_energy / (10^(dbEbN0/10));
 	else 
-		bit_energy = (1/code_rate)*(symbol_energy / log2(double(bits_per_symbol)));
-		N0 = bit_energy / (10^(dbEbN0/10)) * code_rate;
+		bit_energy = (1/code_rate)*(symbol_energy / double(bits_per_symbol));
+		N0 = bit_energy / (10^(dbEbN0/10));
 	end
 
 
